@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.observertest.enums.Event;
 
@@ -28,7 +27,6 @@ public class Bullet extends Subject
 
         direction.x = (float)Math.cos(Math.toRadians(angle));
         direction.y = (float)Math.sin(Math.toRadians(angle));
-        direction.nor();
         direction.scl((float)speed);
 
         Pixmap pixmap = new Pixmap((int)dimension.x, (int)dimension.y, Pixmap.Format.RGBA8888);

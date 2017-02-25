@@ -28,13 +28,23 @@ public abstract class Subject extends GameObject
         return false;
     }
 
-    public void addObserver(Observer observer)
+    public boolean addObserver(Observer newObserver)
     {
-        observers.add(observer);
+        for(Observer observer : observers)
+        {
+            if(newObserver.equals(observer)) return false;
+        }
+
+        return observers.add(newObserver);
     }
 
-    public void removeObserver(Observer observer)
+    public boolean removeObserver(Observer currentObserver)
     {
-        observers.remove(observer);
+        for(Observer observer : observers)
+        {
+            if(currentObserver.equals(observer)) return observers.remove(observer);
+        }
+
+        return false;
     }
 }

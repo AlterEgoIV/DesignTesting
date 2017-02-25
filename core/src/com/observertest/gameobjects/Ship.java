@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.observertest.ObserverTest;
 import com.observertest.enums.Event;
@@ -47,7 +46,6 @@ public class Ship extends Subject
     {
         direction.x = (float)Math.cos(Math.toRadians(angle));
         direction.y = (float)Math.sin(Math.toRadians(angle));
-        direction.nor();
         direction.scl((float)speed);
 
         if(Gdx.input.isKeyPressed(Input.Keys.UP))
