@@ -65,11 +65,11 @@ public class Ship extends Subject
 
         if(Gdx.input.isKeyPressed(Input.Keys.M) && ObserverTest.frameCount % 10 == 0)
         {
-            if(!sendEvent(this, Event.SHIP_FIRED_BULLET))
-            {
-                sendEvent(new Bullet(new Vector2(position.x, position.y), new Vector2(10, 1), speed * 2, angle, color),
-                        Event.SHIP_CREATED_BULLET);
-            }
+//            if(!sendEvent(this, Event.SHIP_FIRED_BULLET))
+//            {
+//                sendEvent(new Bullet(new Vector2(position.x, position.y), new Vector2(10, 1), speed * 2, angle, color),
+//                        Event.SHIP_CREATED_BULLET);
+//            }
         }
     }
 }

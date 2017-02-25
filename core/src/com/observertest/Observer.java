@@ -8,5 +8,5 @@ import com.observertest.gameobjects.GameObject;
  */
 public interface Observer
 {
-    boolean respond(GameObject gameObject, Event event);
+    void receiveEvent(GameObject gameObject, Event event);
 }

@@ -80,7 +80,7 @@ public class ObserverTest extends ApplicationAdapter implements Observer
 	}
 
 	@Override
-	public boolean respond(GameObject gameObject, Event event)
+	public void receiveEvent(GameObject gameObject, Event event)
 	{
 		switch(event)
 		{
@@ -94,8 +94,6 @@ public class ObserverTest extends ApplicationAdapter implements Observer
 						((Subject)inactiveGameObject).addObserver(this);
 						gameObjectsToAdd.add(inactiveGameObject);
 						inactiveGameObjects.remove(inactiveGameObject);
-
-						return true;
 					}
 				}
 
@@ -117,7 +115,5 @@ public class ObserverTest extends ApplicationAdapter implements Observer
 				break;
 			}
 		}
-
-		return false;
 	}
 }

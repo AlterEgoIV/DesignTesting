@@ -18,14 +18,12 @@ public abstract class Subject extends GameObject
         observers = new ArrayList<Observer>();
     }
 
-    protected boolean sendEvent(GameObject gameObject, Event event)
+    protected void sendEvent(GameObject gameObject, Event event)
     {
         for(Observer observer : observers)
         {
-            return observer.respond(gameObject, event);
+            observer.receiveEvent(gameObject, event);
         }
-
-        return false;
     }
 
     public boolean addObserver(Observer newObserver)
