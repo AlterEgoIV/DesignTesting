@@ -74,17 +74,4 @@ public class Ship extends Subject
             }
         }
     }
-
-    @Override
-    public void render(SpriteBatch batch)
-    {
-        batch.draw(image,
-                position.x - dimension.x / 2, position.y - dimension.y / 2,
-                dimension.x / 2, dimension.y / 2, // Origin is center point for rotation
-                dimension.x, dimension.y,
-                1f, 1f,
-                (float)angle,
-                0, 0, (int)dimension.x, (int)dimension.y,
-                false, false);
-    }
 }

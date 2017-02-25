@@ -15,25 +15,7 @@ public class Bullet extends Subject
 {
     public Bullet(Vector2 position, Vector2 dimension, double speed, double angle, Color color)
     {
-        this.position = position;
-        this.dimension = dimension;
-        this.speed = speed;
-        this.angle = angle;
-        this.color = color;
-
-        direction.x = (float)Math.cos(Math.toRadians(angle));
-        direction.y = (float)Math.sin(Math.toRadians(angle));
-        direction.nor();
-        direction.scl((float)speed);
-
-        Pixmap pixmap = new Pixmap((int)dimension.x, (int)dimension.y, Pixmap.Format.RGBA8888);
-        pixmap.setColor(color);
-        pixmap.drawLine(0, 0, (int)dimension.x, 0);
-
-        image = new Texture(pixmap);
-        image.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear); // Reduces jagged lines
-
-        pixmap.dispose();
+        initialise(position, dimension, speed, angle, color);
     }
 
     public void initialise(Vector2 position, Vector2 dimension, double speed, double angle, Color color)
@@ -71,18 +53,5 @@ public class Bullet extends Subject
         {
             sendEvent(this, Event.REMOVE_BULLET);
         }
-    }
-
-    @Override
-    public void render(SpriteBatch batch)
-    {
-        batch.draw(image,
-                position.x - dimension.x / 2, position.y - dimension.y / 2,
-                dimension.x / 2, dimension.y / 2, // Origin is center point for rotation
-                dimension.x, dimension.y,
-                1f, 1f,
-                (float)angle,
-                0, 0, (int)dimension.x, (int)dimension.y,
-                false, false);
     }
 }
