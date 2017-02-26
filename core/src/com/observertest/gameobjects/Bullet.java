@@ -12,25 +12,25 @@ import com.observertest.enums.Event;
  */
 public class Bullet extends Subject
 {
-    public Bullet(Vector2 position, Vector2 dimension, double speed, double angle, Color color)
+    public Bullet(Vector2 position, Vector2 dimension, double speed, double angle, Color colour)
     {
-        initialise(position, dimension, speed, angle, color);
+        initialise(position, dimension, speed, angle, colour);
     }
 
-    public void initialise(Vector2 position, Vector2 dimension, double speed, double angle, Color color)
+    public void initialise(Vector2 position, Vector2 dimension, double speed, double angle, Color colour)
     {
         this.position = position;
         this.dimension = dimension;
         this.speed = speed;
         this.angle = angle;
-        this.color = color;
+        this.colour = colour;
 
         direction.x = (float)Math.cos(Math.toRadians(angle));
         direction.y = (float)Math.sin(Math.toRadians(angle));
         direction.scl((float)speed);
 
         Pixmap pixmap = new Pixmap((int)dimension.x, (int)dimension.y, Pixmap.Format.RGBA8888);
-        pixmap.setColor(color);
+        pixmap.setColor(colour);
         pixmap.drawLine(0, 0, (int)dimension.x, 0);
 
         image = new Texture(pixmap);
@@ -44,12 +44,10 @@ public class Bullet extends Subject
     {
         position.add(direction);
 
-        if(position.x > Gdx.graphics.getWidth() ||
-                position.x < 0 ||
-                position.y > Gdx.graphics.getHeight() ||
-                position.y < 0)
+        if(position.x > Gdx.graphics.getWidth() || position.x < 0 ||
+           position.y > Gdx.graphics.getHeight() || position.y < 0)
         {
-            sendEvent(this, Event.REMOVE_BULLET);
+            sendEvent(Event.REMOVE_BULLET, this);
         }
     }
 }

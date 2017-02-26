@@ -13,7 +13,7 @@ public abstract class GameObject
     protected Vector2 position, dimension, direction;
     protected double speed, angle, rotationSpeed;
     protected Texture image;
-    protected Color color;
+    protected Color colour;
 
     protected GameObject()
     {
@@ -23,6 +23,7 @@ public abstract class GameObject
         speed = 0.0;
         angle = 0.0;
         rotationSpeed = 0.0;
+        colour = Color.RED;
     }
 
     public abstract void update();

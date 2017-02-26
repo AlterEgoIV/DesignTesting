@@ -1,10 +1,10 @@
 package com.observertest.gameobjects;
 
 import com.observertest.Observer;
+import com.observertest.enums.Data;
 import com.observertest.enums.Event;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Carl on 21/02/2017.
@@ -12,17 +12,28 @@ import java.util.List;
 public abstract class Subject extends GameObject
 {
     private List<Observer> observers;
+    public Map<Data, Object> readData;
 
     public Subject()
     {
         observers = new ArrayList<Observer>();
+        readData = new HashMap<Data, Object>();
+
+        readData.put(Data.POSITION, position);
+        readData.put(Data.DIMENSION, dimension);
+        readData.put(Data.SPEED, speed);
+        readData.put(Data.ANGLE, angle);
+        readData.put(Data.COLOUR, colour);
+
+        readData = Collections.unmodifiableMap(readData);
+        double d = (double)(Double)readData.get(Data.SPEED);
     }
 
-    protected void sendEvent(GameObject gameObject, Event event)
+    protected void sendEvent(Event event, GameObject gameObject)
     {
         for(Observer observer : observers)
         {
-            observer.receiveEvent(gameObject, event);
+            observer.receiveEvent(event, gameObject);
         }
     }
 

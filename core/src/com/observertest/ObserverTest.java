@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.observertest.enums.Data;
 import com.observertest.gameobjects.Bullet;
 import com.observertest.gameobjects.GameObject;
 import com.observertest.gameobjects.Ship;
@@ -20,7 +21,8 @@ public class ObserverTest extends ApplicationAdapter implements Observer
 {
 	private FPSLogger fpsLogger;
 	private SpriteBatch batch;
-	private List<GameObject> gameObjects, gameObjectsToAdd, gameObjectsToRemove, inactiveGameObjects;
+	private List<GameObject> gameObjects, gameObjectsToAdd, gameObjectsToRemove;
+	private List<Bullet> inactiveBullets;
 	public static long frameCount = 0;
 	
 	@Override
@@ -31,7 +33,7 @@ public class ObserverTest extends ApplicationAdapter implements Observer
 		gameObjects = new ArrayList<GameObject>();
 		gameObjectsToAdd = new ArrayList<GameObject>();
 		gameObjectsToRemove = new ArrayList<GameObject>();
-		inactiveGameObjects = new ArrayList<GameObject>();
+		inactiveBullets = new ArrayList<Bullet>();
 
 		gameObjects.add(new Ship(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2),
 				new Vector2(50, 50), 5.0, 0.0, 5.0, Color.RED));
@@ -66,8 +68,8 @@ public class ObserverTest extends ApplicationAdapter implements Observer
 
 		gameObjects.removeAll(gameObjectsToRemove);
 		gameObjects.addAll(gameObjectsToAdd);
-		gameObjectsToAdd.clear();
 		gameObjectsToRemove.clear();
+		gameObjectsToAdd.clear();
 
 		frameCount++;
 		fpsLogger.log();
@@ -80,38 +82,43 @@ public class ObserverTest extends ApplicationAdapter implements Observer
 	}
 
 	@Override
-	public void receiveEvent(GameObject gameObject, Event event)
+	public void receiveEvent(Event event, GameObject gameObject)
 	{
 		switch(event)
 		{
 			case SHIP_FIRED_BULLET:
 			{
-				for(GameObject inactiveGameObject : inactiveGameObjects)
+				Ship ship = (Ship)gameObject;
+				Bullet bullet;
+
+				Vector2 position = new Vector2((Vector2)ship.readData.get(Data.POSITION));
+				Vector2 dimension = new Vector2(10, 1);
+				double speed = (Double)ship.readData.get(Data.SPEED) * 2.0;
+				double angle = (Double)ship.readData.get(Data.ANGLE);
+				Color colour = (Color)ship.readData.get(Data.COLOUR);
+
+				if(inactiveBullets.size() == 0)
 				{
-					if(inactiveGameObject instanceof Bullet)
-					{
-						((Ship)gameObject).constructBullet((Bullet)inactiveGameObject);
-						((Subject)inactiveGameObject).addObserver(this);
-						gameObjectsToAdd.add(inactiveGameObject);
-						inactiveGameObjects.remove(inactiveGameObject);
-					}
+					bullet = new Bullet(position, dimension, speed, angle, colour);
+					bullet.addObserver(this);
+				}
+				else
+				{
+					inactiveBullets.get(inactiveBullets.size() - 1).initialise(position, dimension, speed, angle, colour);
+					bullet = inactiveBullets.get(inactiveBullets.size() - 1);
+					inactiveBullets.remove(bullet);
 				}
 
-				break;
-			}
+				gameObjectsToAdd.add(bullet);
 
-			case SHIP_CREATED_BULLET:
-			{
-				((Subject)gameObject).addObserver(this);
-				gameObjectsToAdd.add(gameObject);
 				break;
 			}
 
 			case REMOVE_BULLET:
 			{
-				((Subject)gameObject).removeObserver(this);
+				inactiveBullets.add((Bullet)gameObject);
 				gameObjectsToRemove.add(gameObject);
-				inactiveGameObjects.add(gameObject);
+
 				break;
 			}
 		}

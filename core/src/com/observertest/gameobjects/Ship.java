@@ -14,17 +14,17 @@ import com.observertest.enums.Event;
  */
 public class Ship extends Subject
 {
-    public Ship(Vector2 position, Vector2 dimension, double speed, double angle, double rotationSpeed, Color color)
+    public Ship(Vector2 position, Vector2 dimension, double speed, double angle, double rotationSpeed, Color colour)
     {
         this.position = position;
         this.dimension = dimension;
         this.speed = speed;
         this.angle = angle;
         this.rotationSpeed = rotationSpeed;
-        this.color = color;
+        this.colour = colour;
 
         Pixmap pixmap = new Pixmap((int)dimension.x, (int)dimension.y, Pixmap.Format.RGBA8888);
-        pixmap.setColor(color);
+        pixmap.setColor(colour);
         pixmap.drawLine(0, 0, (int)dimension.x, (int)dimension.y / 2); // Outside left
         pixmap.drawLine(0, (int)dimension.y, (int)dimension.x, (int)dimension.y / 2); // Outside right
         pixmap.drawLine(0, 0, (int)dimension.x / 2, (int)dimension.y / 2); // Inside left
@@ -34,11 +34,6 @@ public class Ship extends Subject
         image.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear); // Reduces jagged lines
 
         pixmap.dispose();
-    }
-
-    public void constructBullet(Bullet bullet)
-    {
-        bullet.initialise(new Vector2(position.x, position.y), new Vector2(10, 1), speed * 2, angle, color);
     }
 
     @Override
@@ -65,11 +60,7 @@ public class Ship extends Subject
 
         if(Gdx.input.isKeyPressed(Input.Keys.M) && ObserverTest.frameCount % 10 == 0)
         {
-//            if(!sendEvent(this, Event.SHIP_FIRED_BULLET))
-//            {
-//                sendEvent(new Bullet(new Vector2(position.x, position.y), new Vector2(10, 1), speed * 2, angle, color),
-//                        Event.SHIP_CREATED_BULLET);
-//            }
+            sendEvent(Event.SHIP_FIRED_BULLET, this);
         }
     }
 }
