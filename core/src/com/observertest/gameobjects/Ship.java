@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.observertest.ObserverTest;
 import com.observertest.enums.Event;
 
 /**
@@ -14,6 +13,9 @@ import com.observertest.enums.Event;
  */
 public class Ship extends Subject
 {
+    private int coolDownTime, lastFired;
+    private boolean canFire;
+
     public Ship(Vector2 position, Vector2 dimension, double speed, double angle, double rotationSpeed, Color colour)
     {
         this.position = position;
@@ -22,6 +24,9 @@ public class Ship extends Subject
         this.angle = angle;
         this.rotationSpeed = rotationSpeed;
         this.colour = colour;
+        coolDownTime = 60 / 4;
+        lastFired = 0;
+        canFire = true;
 
         Pixmap pixmap = new Pixmap((int)dimension.x, (int)dimension.y, Pixmap.Format.RGBA8888);
         pixmap.setColor(colour);
@@ -58,9 +63,15 @@ public class Ship extends Subject
             angle -= rotationSpeed;
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.M) && ObserverTest.frameCount % 10 == 0)
+        if(Gdx.input.isKeyPressed(Input.Keys.M) && canFire)
         {
+            System.out.println("Ship fired");
+
+            canFire = false;
             sendEvent(Event.SHIP_FIRED_BULLET, this);
         }
+
+        if(!canFire) lastFired++;
+        if(lastFired % coolDownTime == 0) canFire = true;
     }
 }

@@ -72,7 +72,7 @@ public class ObserverTest extends ApplicationAdapter implements Observer
 		gameObjectsToAdd.clear();
 
 		frameCount++;
-		fpsLogger.log();
+		//fpsLogger.log();
 	}
 
 	@Override
