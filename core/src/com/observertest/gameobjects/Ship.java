@@ -6,18 +6,20 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.observertest.enums.Event;
+import com.observertest.InputHandler;
+import com.observertest.World;
 
 /**
  * Created by Carl on 16/02/2017.
  */
-public class Ship extends Subject
+public class Ship extends GameObject implements InputHandler
 {
     private int coolDownTime, lastFired;
     private boolean canFire;
 
-    public Ship(Vector2 position, Vector2 dimension, double speed, double angle, double rotationSpeed, Color colour)
+    public Ship(World world, Vector2 position, Vector2 dimension, double speed, double angle, double rotationSpeed, Color colour)
     {
+        super(world);
         this.position = position;
         this.dimension = dimension;
         this.speed = speed;
@@ -44,12 +46,21 @@ public class Ship extends Subject
     @Override
     public void update()
     {
+        handleInput();
+
         direction.x = (float)Math.cos(Math.toRadians(angle));
         direction.y = (float)Math.sin(Math.toRadians(angle));
-        direction.scl((float)speed);
 
+        if(!canFire) lastFired++;
+        if(lastFired % coolDownTime == 0) canFire = true;
+    }
+
+    @Override
+    public void handleInput()
+    {
         if(Gdx.input.isKeyPressed(Input.Keys.UP))
         {
+            direction.scl((float)speed);
             position.add(direction);
         }
 
@@ -66,10 +77,25 @@ public class Ship extends Subject
         if(Gdx.input.isKeyPressed(Input.Keys.M) && canFire)
         {
             canFire = false;
-            sendEvent(Event.SHIP_FIRED_BULLET, this);
+            fireBullet();
+        }
+    }
+
+    private void fireBullet()
+    {
+        for(int i = 0; i < world.getGameObjects().size(); ++i)
+        {
+            GameObject gameObject = (GameObject)world.getGameObjects().get(i);
+
+            if(gameObject instanceof Bullet && !gameObject.isActive)
+            {
+                Bullet bullet = (Bullet)gameObject;
+                bullet.initialise(new Vector2(position.x, position.y), new Vector2(10, 1), speed * 2, angle, colour);
+                return;
+            }
         }
 
-        if(!canFire) lastFired++;
-        if(lastFired % coolDownTime == 0) canFire = true;
+        Bullet bullet = new Bullet(world, new Vector2(position.x, position.y), new Vector2(10, 1), speed * 2, angle, colour);
+        world.getGameObjectsToAdd().add(bullet);
     }
 }

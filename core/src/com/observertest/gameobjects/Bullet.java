@@ -5,20 +5,28 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.observertest.enums.Event;
+import com.observertest.World;
 
 /**
  * Created by Carl on 16/02/2017.
  */
-public class Bullet extends Subject
+public class Bullet extends GameObject
 {
-    public Bullet(Vector2 position, Vector2 dimension, double speed, double angle, Color colour)
+    public Bullet(World world)
     {
+        super(world);
+        isActive = false;
+    }
+
+    public Bullet(World world, Vector2 position, Vector2 dimension, double speed, double angle, Color colour)
+    {
+        super(world);
         initialise(position, dimension, speed, angle, colour);
     }
 
     public void initialise(Vector2 position, Vector2 dimension, double speed, double angle, Color colour)
     {
+        isActive = true;
         this.position = position;
         this.dimension = dimension;
         this.speed = speed;
@@ -47,7 +55,7 @@ public class Bullet extends Subject
         if(position.x > Gdx.graphics.getWidth() || position.x < 0 ||
            position.y > Gdx.graphics.getHeight() || position.y < 0)
         {
-            sendEvent(Event.REMOVE_BULLET, this);
+            isActive = false;
         }
     }
 }

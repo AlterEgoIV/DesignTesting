@@ -11,13 +11,16 @@ import com.observertest.World;
  */
 public abstract class GameObject
 {
+    protected World world;
     protected Vector2 position, dimension, direction;
     protected double speed, angle, rotationSpeed;
     protected Texture image;
     protected Color colour;
+    protected boolean isActive;
 
-    protected GameObject()
+    protected GameObject(World world)
     {
+        this.world = world;
         position = new Vector2(0, 0);
         dimension = new Vector2(0, 0);
         direction = new Vector2(0, 0);
@@ -25,6 +28,7 @@ public abstract class GameObject
         angle = 0.0;
         rotationSpeed = 0.0;
         colour = Color.WHITE;
+        isActive = true;
     }
 
     public abstract void update();
@@ -40,4 +44,6 @@ public abstract class GameObject
                 0, 0, (int)dimension.x, (int)dimension.y,
                 false, false);
     }
+
+    public boolean isActive(){ return isActive; }
 }
