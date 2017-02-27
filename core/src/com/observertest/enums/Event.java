@@ -6,6 +6,5 @@ package com.observertest.enums;
 public enum Event
 {
     SHIP_FIRED_BULLET,
-    SHIP_CREATED_BULLET,
     REMOVE_BULLET
 }

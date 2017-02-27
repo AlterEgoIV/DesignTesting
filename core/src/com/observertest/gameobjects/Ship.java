@@ -65,8 +65,6 @@ public class Ship extends Subject
 
         if(Gdx.input.isKeyPressed(Input.Keys.M) && canFire)
         {
-            System.out.println("Ship fired");
-
             canFire = false;
             sendEvent(Event.SHIP_FIRED_BULLET, this);
         }

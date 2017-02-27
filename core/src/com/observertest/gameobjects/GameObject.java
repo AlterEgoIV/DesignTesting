@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.observertest.World;
 
 /**
  * Created by Carl on 16/02/2017.
@@ -23,7 +24,7 @@ public abstract class GameObject
         speed = 0.0;
         angle = 0.0;
         rotationSpeed = 0.0;
-        colour = Color.RED;
+        colour = Color.WHITE;
     }
 
     public abstract void update();

@@ -26,7 +26,6 @@ public abstract class Subject extends GameObject
         readData.put(Data.COLOUR, colour);
 
         readData = Collections.unmodifiableMap(readData);
-        double d = (double)(Double)readData.get(Data.SPEED);
     }
 
     protected void sendEvent(Event event, GameObject gameObject)
