@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class ObserverTest extends ApplicationAdapter
+public class TestGame extends ApplicationAdapter
 {
 	private World world;
 	private SpriteBatch batch;

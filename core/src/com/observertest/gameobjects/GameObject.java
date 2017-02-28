@@ -13,7 +13,7 @@ public abstract class GameObject
 {
     protected World world;
     protected Vector2 position, dimension, direction;
-    protected double speed, angle, rotationSpeed;
+    protected double speed, angle;
     protected Texture image;
     protected Color colour;
     protected boolean isActive;
@@ -26,7 +26,6 @@ public abstract class GameObject
         direction = new Vector2(0, 0);
         speed = 0.0;
         angle = 0.0;
-        rotationSpeed = 0.0;
         colour = Color.WHITE;
         isActive = true;
     }

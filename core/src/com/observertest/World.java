@@ -25,11 +25,6 @@ public class World
 
         gameObjects.add(new Ship(this, new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2),
                         new Vector2(50, 50), 5.0, 0.0, 5.0, Color.RED));
-
-        for(int i = 0; i < 50; ++i)
-        {
-            gameObjects.add(new Bullet(this));
-        }
     }
 
     public void update()
@@ -54,6 +49,6 @@ public class World
         }
     }
 
-    public List getGameObjects(){ return gameObjects; }
-    public List getGameObjectsToAdd(){ return gameObjectsToAdd; }
+    public List<GameObject> getGameObjects(){ return gameObjects; }
+    public List<GameObject> getGameObjectsToAdd(){ return gameObjectsToAdd; }
 }

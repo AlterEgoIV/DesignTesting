@@ -2,7 +2,7 @@ package com.observertest.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.observertest.ObserverTest;
+import com.observertest.TestGame;
 
 public class DesktopLauncher
 {
@@ -10,6 +10,6 @@ public class DesktopLauncher
 	{
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.foregroundFPS = 60;
-		new LwjglApplication(new ObserverTest(), config);
+		new LwjglApplication(new TestGame(), config);
 	}
 }

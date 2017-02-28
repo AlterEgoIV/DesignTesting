@@ -14,8 +14,8 @@ import com.observertest.World;
  */
 public class Ship extends GameObject implements InputHandler
 {
-    private int coolDownTime, lastFired;
-    private boolean canFire;
+    private double rotationSpeed;
+    private int coolDownTime, timeToCool;
 
     public Ship(World world, Vector2 position, Vector2 dimension, double speed, double angle, double rotationSpeed, Color colour)
     {
@@ -27,8 +27,7 @@ public class Ship extends GameObject implements InputHandler
         this.rotationSpeed = rotationSpeed;
         this.colour = colour;
         coolDownTime = 60 / 4;
-        lastFired = 0;
-        canFire = true;
+        timeToCool = 0;
 
         Pixmap pixmap = new Pixmap((int)dimension.x, (int)dimension.y, Pixmap.Format.RGBA8888);
         pixmap.setColor(colour);
@@ -51,8 +50,7 @@ public class Ship extends GameObject implements InputHandler
         direction.x = (float)Math.cos(Math.toRadians(angle));
         direction.y = (float)Math.sin(Math.toRadians(angle));
 
-        if(!canFire) lastFired++;
-        if(lastFired % coolDownTime == 0) canFire = true;
+        if(timeToCool > 0) timeToCool--;
     }
 
     @Override
@@ -74,19 +72,17 @@ public class Ship extends GameObject implements InputHandler
             angle -= rotationSpeed;
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.M) && canFire)
+        if(Gdx.input.isKeyPressed(Input.Keys.M) && timeToCool == 0)
         {
-            canFire = false;
+            timeToCool = coolDownTime;
             fireBullet();
         }
     }
 
     private void fireBullet()
     {
-        for(int i = 0; i < world.getGameObjects().size(); ++i)
+        for(GameObject gameObject : world.getGameObjects())
         {
-            GameObject gameObject = (GameObject)world.getGameObjects().get(i);
-
             if(gameObject instanceof Bullet && !gameObject.isActive)
             {
                 Bullet bullet = (Bullet)gameObject;
