@@ -15,7 +15,6 @@ public class Bullet extends GameObject
     public Bullet(World world)
     {
         super(world);
-        isActive = false;
     }
 
     public Bullet(World world, Vector2 position, Vector2 dimension, double speed, double angle, Color colour)
@@ -26,7 +25,6 @@ public class Bullet extends GameObject
 
     public void initialise(Vector2 position, Vector2 dimension, double speed, double angle, Color colour)
     {
-        isActive = true;
         this.position = position;
         this.dimension = dimension;
         this.speed = speed;
@@ -55,7 +53,7 @@ public class Bullet extends GameObject
         if(position.x > Gdx.graphics.getWidth() || position.x < 0 ||
            position.y > Gdx.graphics.getHeight() || position.y < 0)
         {
-            isActive = false;
+            world.remove(this);
         }
     }
 }

@@ -16,39 +16,79 @@ import java.util.List;
  */
 public class World
 {
-    private List<GameObject> gameObjects, gameObjectsToAdd;
+    private List<GameObject> activeGameObjects, inactiveGameObjects, activeGameObjectsToAdd, activeGameObjectsToRemove;
 
     public World()
     {
-        gameObjects = new ArrayList<GameObject>();
-        gameObjectsToAdd = new ArrayList<GameObject>();
+        activeGameObjects = new ArrayList<GameObject>();
+        inactiveGameObjects = new ArrayList<GameObject>();
+        activeGameObjectsToAdd = new ArrayList<GameObject>();
+        activeGameObjectsToRemove = new ArrayList<GameObject>();
 
-        gameObjects.add(new Ship(this, new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2),
+        activeGameObjects.add(new Ship(this, new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2),
                         new Vector2(50, 50), 5.0, 0.0, 5.0, Color.RED));
     }
 
-    public void update()
+    void update()
     {
-        for(GameObject gameObject : gameObjects)
+        for(GameObject gameObject : activeGameObjects)
         {
-            if(gameObject.isActive()) gameObject.update();
+            gameObject.update();
         }
 
-        if(!gameObjectsToAdd.isEmpty())
+        if(!activeGameObjectsToRemove.isEmpty())
         {
-            gameObjects.addAll(gameObjectsToAdd);
-            gameObjectsToAdd.clear();
+            activeGameObjects.removeAll(activeGameObjectsToRemove);
+            activeGameObjectsToRemove.clear();
+        }
+
+        if(!activeGameObjectsToAdd.isEmpty())
+        {
+            activeGameObjects.addAll(activeGameObjectsToAdd);
+            activeGameObjectsToAdd.clear();
         }
     }
 
-    public void render(SpriteBatch batch)
+    void render(SpriteBatch batch)
     {
-        for(GameObject gameObject : gameObjects)
+        for(GameObject gameObject : activeGameObjects)
         {
-            if(gameObject.isActive()) gameObject.render(batch);
+            gameObject.render(batch);
         }
     }
 
-    public List<GameObject> getGameObjects(){ return gameObjects; }
-    public List<GameObject> getGameObjectsToAdd(){ return gameObjectsToAdd; }
+    public void add(GameObject gameObject)
+    {
+        activeGameObjectsToAdd.add(gameObject);
+    }
+
+    public void addBullet(Vector2 position, Vector2 dimension, double speed, double angle, Color colour)
+    {
+        for(GameObject gameObject : inactiveGameObjects)
+        {
+            if(gameObject instanceof Bullet)
+            {
+                ((Bullet)gameObject).initialise(position, dimension, speed, angle, colour);
+                activeGameObjectsToAdd.add(gameObject);
+                inactiveGameObjects.remove(gameObject);
+                return;
+            }
+        }
+
+        activeGameObjectsToAdd.add(new Bullet(this, position, dimension, speed, angle, colour));
+    }
+
+    public void remove(GameObject gameObject)
+    {
+        if(activeGameObjects.contains(gameObject)) // Is this check necessary?
+        {
+            inactiveGameObjects.add(gameObject);
+            activeGameObjectsToRemove.add(gameObject);
+        }
+    }
+
+    public boolean contains(GameObject gameObject)
+    {
+        return activeGameObjects.contains(gameObject) || inactiveGameObjects.contains(gameObject);
+    }
 }

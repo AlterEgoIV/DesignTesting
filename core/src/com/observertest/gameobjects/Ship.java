@@ -81,17 +81,6 @@ public class Ship extends GameObject implements InputHandler
 
     private void fireBullet()
     {
-        for(GameObject gameObject : world.getGameObjects())
-        {
-            if(gameObject instanceof Bullet && !gameObject.isActive)
-            {
-                Bullet bullet = (Bullet)gameObject;
-                bullet.initialise(new Vector2(position.x, position.y), new Vector2(10, 1), speed * 2, angle, colour);
-                return;
-            }
-        }
-
-        Bullet bullet = new Bullet(world, new Vector2(position.x, position.y), new Vector2(10, 1), speed * 2, angle, colour);
-        world.getGameObjectsToAdd().add(bullet);
+        world.addBullet(new Vector2(position.x, position.y), new Vector2(10, 1), speed * 2, angle, colour);
     }
 }

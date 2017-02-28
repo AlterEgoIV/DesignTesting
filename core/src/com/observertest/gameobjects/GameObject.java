@@ -16,7 +16,6 @@ public abstract class GameObject
     protected double speed, angle;
     protected Texture image;
     protected Color colour;
-    protected boolean isActive;
 
     protected GameObject(World world)
     {
@@ -27,7 +26,6 @@ public abstract class GameObject
         speed = 0.0;
         angle = 0.0;
         colour = Color.WHITE;
-        isActive = true;
     }
 
     public abstract void update();
@@ -43,6 +41,4 @@ public abstract class GameObject
                 0, 0, (int)dimension.x, (int)dimension.y,
                 false, false);
     }
-
-    public boolean isActive(){ return isActive; }
 }
