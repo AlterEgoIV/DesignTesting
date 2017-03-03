@@ -28,12 +28,13 @@ public class TestGame extends ApplicationAdapter
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		world.update();
+		world.handleCollisions();
 
 		batch.begin();
 		world.render(batch);
 		batch.end();
 
-		fpsLogger.log();
+		//fpsLogger.log();
 	}
 
 	@Override

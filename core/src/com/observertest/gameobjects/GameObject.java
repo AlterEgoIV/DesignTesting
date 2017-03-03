@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.observertest.World;
 
+import java.awt.Rectangle;
+
 /**
  * Created by Carl on 16/02/2017.
  */
