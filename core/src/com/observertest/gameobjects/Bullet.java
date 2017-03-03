@@ -51,7 +51,7 @@ public class Bullet extends CollidableObject
             world.remove(this);
         }
 
-        rectangle.setLocation((int)position.x - (int)dimension.x / 2, (int)position.y - (int)dimension.y / 2);
+        updateRectangle();
     }
 
     @Override

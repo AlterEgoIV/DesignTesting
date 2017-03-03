@@ -51,7 +51,7 @@ public class Ship extends CollidableObject implements InputHandler
         direction.x = (float)Math.cos(Math.toRadians(angle));
         direction.y = (float)Math.sin(Math.toRadians(angle));
 
-        rectangle.setLocation((int)position.x - (int)dimension.x / 2, (int)position.y - (int)dimension.y / 2);
+        updateRectangle();
 
         if(timeToCool > 0) timeToCool--;
     }

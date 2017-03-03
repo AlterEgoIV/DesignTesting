@@ -30,6 +30,11 @@ public abstract class CollidableObject extends GameObject
         rectangleImage = new Texture(pixmap);
     }
 
+    protected void updateRectangle()
+    {
+        rectangle.setLocation((int)position.x - (int)dimension.x / 2, (int)position.y - (int)dimension.y / 2);
+    }
+
     @Override
     public void render(SpriteBatch batch)
     {
