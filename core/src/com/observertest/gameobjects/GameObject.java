@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.observertest.World;
 
-import java.awt.Rectangle;
-
 /**
  * Created by Carl on 16/02/2017.
  */
@@ -19,15 +17,26 @@ public abstract class GameObject
     protected Texture image;
     protected Color colour;
 
-    protected GameObject(World world)
+//    protected GameObject(World world)
+//    {
+//        this.world = world;
+//        position = new Vector2(0, 0);
+//        dimension = new Vector2(0, 0);
+//        direction = new Vector2(0, 0);
+//        speed = 0.0;
+//        angle = 0.0;
+//        colour = Color.WHITE;
+//    }
+
+    protected GameObject(World world, Vector2 position, Vector2 dimension, double speed, double angle, Color colour)
     {
         this.world = world;
-        position = new Vector2(0, 0);
-        dimension = new Vector2(0, 0);
+        this.position = position;
+        this.dimension = dimension;
+        this.speed = speed;
+        this.angle = angle;
+        this.colour = colour;
         direction = new Vector2(0, 0);
-        speed = 0.0;
-        angle = 0.0;
-        colour = Color.WHITE;
     }
 
     public abstract void update();

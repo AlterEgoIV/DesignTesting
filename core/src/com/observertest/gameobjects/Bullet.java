@@ -10,16 +10,11 @@ import com.observertest.World;
 /**
  * Created by Carl on 16/02/2017.
  */
-public class Bullet extends GameObject
+public class Bullet extends CollidableObject
 {
-    public Bullet(World world)
-    {
-        super(world);
-    }
-
     public Bullet(World world, Vector2 position, Vector2 dimension, double speed, double angle, Color colour)
     {
-        super(world);
+        super(world, position, dimension, speed, angle, colour);
         initialise(position, dimension, speed, angle, colour);
     }
 
@@ -55,5 +50,13 @@ public class Bullet extends GameObject
         {
             world.remove(this);
         }
+
+        rectangle.setLocation((int)position.x - (int)dimension.x / 2, (int)position.y - (int)dimension.y / 2);
+    }
+
+    @Override
+    public void resolveCollision(CollidableObject collidableObject)
+    {
+
     }
 }

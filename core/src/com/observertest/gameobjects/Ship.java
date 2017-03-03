@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.observertest.InputHandler;
 import com.observertest.World;
 
-import java.awt.*;
+import java.awt.Rectangle;
 
 /**
  * Created by Carl on 16/02/2017.
@@ -21,22 +21,14 @@ public class Ship extends CollidableObject implements InputHandler
     public Ship(World world, Vector2 position, Vector2 dimension, double speed, double angle, double rotationSpeed, Color colour,
                 int forward, int rotateLeft, int rotateRight, int fire)
     {
-        super(world);
-        this.position = position;
-        this.dimension = dimension;
-        this.speed = speed;
-        this.angle = angle;
+        super(world, position, dimension, speed, angle, colour);
         this.rotationSpeed = rotationSpeed;
-        this.colour = colour;
         this.forward = forward;
         this.rotateLeft = rotateLeft;
         this.rotateRight = rotateRight;
         this.fire = fire;
         coolDownTime = 60 / 4;
         timeToCool = 0;
-
-        rectangle.setRect(position.x, position.y, dimension.x, dimension.y);
-        //rectangle.setBounds((int)position.x, (int)position.y, (int)dimension.x, (int)dimension.y);
 
         Pixmap pixmap = new Pixmap((int)dimension.x, (int)dimension.y, Pixmap.Format.RGBA8888);
         pixmap.setColor(colour);
@@ -59,7 +51,7 @@ public class Ship extends CollidableObject implements InputHandler
         direction.x = (float)Math.cos(Math.toRadians(angle));
         direction.y = (float)Math.sin(Math.toRadians(angle));
 
-        rectangle.setLocation((int)position.x, (int)position.y);
+        rectangle.setLocation((int)position.x - (int)dimension.x / 2, (int)position.y - (int)dimension.y / 2);
 
         if(timeToCool > 0) timeToCool--;
     }
