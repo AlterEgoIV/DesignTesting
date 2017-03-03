@@ -107,15 +107,17 @@ public class World
 
     public void remove(GameObject gameObject)
     {
-        if(activeGameObjects.contains(gameObject)) // Is this check necessary?
+        if(!activeGameObjects.contains(gameObject))
         {
-            inactiveGameObjects.add(gameObject);
-            activeGameObjectsToRemove.add(gameObject);
+            throw new AssertionError("Attempting to remove non-active GameObject");
+        }
 
-            if(gameObject instanceof CollidableObject)
-            {
-                collisionHandler.remove((CollidableObject)gameObject);
-            }
+        inactiveGameObjects.add(gameObject);
+        activeGameObjectsToRemove.add(gameObject);
+
+        if(gameObject instanceof CollidableObject)
+        {
+            collisionHandler.remove((CollidableObject)gameObject);
         }
     }
 }
